@@ -1,0 +1,4 @@
+D:\ProjectByMyself\WebSite\KspDmp_Assistant\KspDmp.Data\bin\Release\KspDmp.Data.dll
+D:\ProjectByMyself\WebSite\KspDmp_Assistant\KspDmp.Data\bin\Release\KspDmp.Data.pdb
+D:\ProjectByMyself\WebSite\KspDmp_Assistant\KspDmp.Data\obj\Release\KspDmp.Data.dll
+D:\ProjectByMyself\WebSite\KspDmp_Assistant\KspDmp.Data\obj\Release\KspDmp.Data.pdb

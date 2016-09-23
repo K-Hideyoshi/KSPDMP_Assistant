@@ -1,0 +1,9 @@
+D:\ProjectByMyself\WebSite\KspDmp_FixKerbal\KspDmp.Data\bin\Debug\KspDmp.Data.dll
+D:\ProjectByMyself\WebSite\KspDmp_FixKerbal\KspDmp.Data\bin\Debug\KspDmp.Data.pdb
+D:\ProjectByMyself\WebSite\KspDmp_FixKerbal\KspDmp.Data\obj\Debug\KspDmp.Data.dll
+D:\ProjectByMyself\WebSite\KspDmp_FixKerbal\KspDmp.Data\obj\Debug\KspDmp.Data.pdb
+D:\ProjectByMyself\WebSite\KspDmp_Assistant\KspDmp.Data\bin\Debug\KspDmp.Data.dll
+D:\ProjectByMyself\WebSite\KspDmp_Assistant\KspDmp.Data\bin\Debug\KspDmp.Data.pdb
+D:\ProjectByMyself\WebSite\KspDmp_Assistant\KspDmp.Data\obj\Debug\KspDmp.Data.dll
+D:\ProjectByMyself\WebSite\KspDmp_Assistant\KspDmp.Data\obj\Debug\KspDmp.Data.pdb
+D:\ProjectByMyself\WebSite\KspDmp_Assistant\KspDmp.Data\obj\Debug\KspDmp.Data.csprojResolveAssemblyReference.cache

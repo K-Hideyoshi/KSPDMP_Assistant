@@ -1,0 +1,7 @@
+﻿@{
+    ViewBag.Title = "拯救小绿人";
+    Layout = "";
+}
+<script type="text/javascript">
+        alert("@if (ViewBag.Success) {@Html.Raw("修复成功0w0") } else {@Html.Raw("修复失败qwq\n" + ViewBag.Msg) }");
+</script>

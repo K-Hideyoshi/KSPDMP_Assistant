@@ -1,0 +1,138 @@
+﻿@model KspDmp.Assistant.Models.FundingModel
+@{
+	ViewBag.Title = "拨款";
+	Layout = "../Shared/_layout.cshtml";
+}
+
+<script>
+	function addFund(fund, e) {
+		var input = $($(e).parent().children("input"));
+		input.val(parseFloat(input.val()) + fund);
+		input.change();
+	}
+
+	function addFundAll(fund) {
+		var checkList = $(".check");
+		for (var index = 0; index < checkList.length; index++)
+		{
+			if ($(checkList[index]).is(":checked"))
+			{
+				var checkedFund = $(checkList[index]).parent().next().next().children();
+				checkedFund.val(parseFloat(checkedFund.val()) + fund);
+				checkedFund.change();
+			}
+		}
+	}
+
+	//确认拨款
+	function confirm()
+	{
+		$("form").submit();
+	}
+
+	$(function () {
+		$(document).on("change", ".fundAmount", function () {
+			if (parseFloat($(this).val()) != parseFloat($(this).val()))
+				$(this).val(0);
+			//变更数量
+			var amountTd = $($(this).parent().next("td"));
+			var originAmount = amountTd.attr("data-val");
+			var addFund = parseFloat($(this).val());
+			var newAmount = parseFloat(originAmount) + addFund;
+			if (newAmount < 0)
+				newAmount = 0;
+			amountTd.html(newAmount.toFixed(2));
+
+			//调整颜色
+			if (addFund > 0) {
+				amountTd.css("color", "green")
+			}
+			else if (addFund < 0) {
+				amountTd.css("color", "red")
+			}
+			else {
+				amountTd.css("color", "")
+			}
+
+			//调整进度条
+			var fundAft = $(".fundAmountAft");
+			var max = 0;
+			for (var index = 0; index < fundAft.length; index++) {
+				var currentAmount = parseFloat($(fundAft[index]).html());
+				if (max < currentAmount)
+					max = currentAmount;
+			}
+
+			for (var index = 0; index < fundAft.length; index++) {
+				var currentAmount = parseFloat($(fundAft[index]).html());
+				var percent = currentAmount / max * 100 + "%";
+				$(fundAft[index]).next().children().children().css("width", percent);
+			}
+
+		});
+
+		$(document).on("change", "#checkAll", function () {
+			if ($(this).is(":checked")) {
+				$(".check").prop('checked', $(this).prop('checked'));
+			}
+			else {
+				$(".check").removeAttr("checked");
+			}
+		});
+	});
+</script>
+
+<h2>拨款 <small>Funding</small></h2>
+
+<div>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th class="col-md-1"><input type="checkbox" id="checkAll"/> 全选</th>
+				<th class="col-md-1">玩家名称</th>
+				<th class="col-md-4">拨款金额</th>
+				<th class="col-md-2">拨款后资金</th>
+				<th class="col-md-4">资金比例</th>
+			</tr>
+		</thead>
+		@using (Html.BeginForm())
+		{
+		<tbody>
+			@{
+				double maxFund = Model.Players.Max(m => m.Player.Fund);
+				foreach (var player in Model.Players)
+				{
+					<tr>
+						<td style="vertical-align:middle"><input class="check" type="checkbox" /></td>
+						<td style="vertical-align:middle">@(player.Player.Name)@Html.TextBoxFor(m => m.Players[Model.Players.IndexOf(player)].Player.Name, new { @Style = "display:none" })</td>
+						<td style="vertical-align:middle">
+							@Html.TextBoxFor(m => m.Players[Model.Players.IndexOf(player)].FundAmount, new { @Class = "fundAmount", @Type="number", @Style= "width:40%" })
+							@*<input class="fundAmount" type="number" value="@player.FundAmount" style="width:40%" />*@
+							<button onclick="javascript: addFund(1000, this);" type="button" class="btn btn-xs btn-primary">+1K</button>
+							<button onclick="javascript: addFund(10000, this);" type="button" class="btn btn-xs btn-success">+10K</button>
+							<button onclick="javascript: addFund(100000, this);" type="button" class="btn btn-xs btn-warning">+100K</button>
+							<button onclick="javascript: addFund(1000000, this);" type="button" class="btn btn-xs btn-danger">+1M</button>
+						</td>
+						<td class="fundAmountAft" style="vertical-align:middle" data-val="@Math.Round(player.Player.Fund, 2).ToString("0.00")">@Math.Round(player.Player.Fund, 2).ToString("0.00")</td>@Html.TextBoxFor(m => m.Players[Model.Players.IndexOf(player)].Player.Fund, new { @Style = "display:none" })
+						<td style="vertical-align:middle">
+							<div class="progress" style="margin-top:10px;margin-bottom:10px;">
+								<div class="progress-bar progress-bar-success progress-bar-striped" style="width: @(player.Player.Fund / maxFund * 100)%;"><span class="sr-only"></span></div>
+							</div>
+						</td>
+					</tr>
+				}
+			}
+		</tbody>
+				}
+	</table>
+	<div>
+		<span>选中玩家批量拨款</span>
+		<button onclick="javascript: addFundAll(1000);" type="button" class="btn btn-xs btn-primary">+1K</button>
+		<button onclick="javascript: addFundAll(10000);" type="button" class="btn btn-xs btn-success">+10K</button>
+		<button onclick="javascript: addFundAll(100000);" type="button" class="btn btn-xs btn-warning">+100K</button>
+		<button onclick="javascript: addFundAll(1000000);" type="button" class="btn btn-xs btn-danger">+1M</button>
+	</div>
+	<div style="margin-top:20px;">
+		<button onclick="javascript:confirm();" type="button" class="btn btn-sm btn-primary">确认拨款！</button>
+	</div>
+</div>
